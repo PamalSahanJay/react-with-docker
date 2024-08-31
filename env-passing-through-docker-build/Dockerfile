@@ -1,20 +1,20 @@
 FROM node:22.4.1-slim as build
 
-ARG NAME
+ARG OIDC_CLIENT_ID
+ARG OIDC_AUTHORITY
+ARG OIDC_CLIENT_SECRET
 
-ENV VITE_NAME=$NAME
+ENV VITE_OIDC_CLIENT_ID=$OIDC_CLIENT_ID
+ENV VITE_OIDC_AUTHORITY=$OIDC_AUTHORITY
+ENV VITE_OIDC_CLIENT_SECRET=$OIDC_CLIENT_SECRET
 
-# RUN apk add git
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
 COPY . .
+ 
+RUN npm install
 RUN npm run build
 
-FROM node:22.4.1-slim
-RUN npm install -g http-server
-COPY --from=build /app/dist ./    
-
-EXPOSE 8080
-
-CMD ["http-server", "-p", "8080"]
+FROM nginx:1.27.0-alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx-custom.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
