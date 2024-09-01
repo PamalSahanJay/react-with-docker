@@ -10,7 +10,9 @@ ENV VITE_OIDC_CLIENT_SECRET=$OIDC_CLIENT_SECRET
 
 WORKDIR /app
 COPY . .
- 
+
+RUN rm -rf node_modules package-lock.json
+
 RUN npm install
 RUN npm run build
 
