@@ -7,9 +7,8 @@ function App() {
   return (
     <>
       <div>
-        <h1>client id : {import.meta.env.VITE_OIDC_CLIENT_ID}</h1>
-        <h1>client secreat : {import.meta.env.VITE_OIDC_CLIENT_SECRET}</h1>
-        <h1>authority url : {import.meta.env.VITE_OIDC_AUTHORITY}</h1>
+        <h1>api url : {import.meta.env.VITE_API_URL}</h1>
+        <h1>app env : {import.meta.env.VITE_APP_ENV}</h1>
       </div>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
